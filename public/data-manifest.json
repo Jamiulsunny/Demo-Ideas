@@ -1,0 +1,22 @@
+{
+  "project": "AresGrid Marswalk",
+  "version": "1.0.0",
+  "mode": "offline-demo",
+  "bundledData": [
+    "route cost model",
+    "science stop examples",
+    "landmarks",
+    "simulated weather",
+    "simulated radiation"
+  ],
+  "nasaSources": [
+    "https://trek.nasa.gov/tiles/apidoc/trekAPI.html?body=mars",
+    "https://pds.nasa.gov/datasearch/subscription-service/SS-Release.shtml",
+    "https://science.nasa.gov/mission/mars-reconnaissance-orbiter/science-instruments/",
+    "https://data.nasa.gov/dataset/msl-mars-radiation-assessment-detector-rdr",
+    "https://data.nasa.gov/dataset/msl-mars-rover-env-monitoring-station-5-modrdr-v1-0-cb197",
+    "https://data.nasa.gov/dataset/odyssey-themis-vis-geo-v2-0",
+    "https://data.nasa.gov/dataset/odyssey-themis-vis-alb-v2-0",
+    "https://data.nasa.gov/dataset/?tags=mars&tags=maven"
+  ]
+}

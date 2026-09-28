@@ -1,140 +1,161 @@
-# AresGrid Marswalk
+# AresGrid — Martian Map / Marswalk Planner
 
-AresGrid is a hackathon-ready React/Vite/Tailwind/Leaflet prototype for the NASA Space Apps Challenge 2026 challenge **Interplanetary Survival Guide: Martian Map**.
+A professional NASA Space Apps Challenge 2026 prototype for **Interplanetary Survival Guide: Martian Map**.
+
+> Plan safer. Walk smarter. Discover scientifically.
 
 ## What is included
 
-- Planner Mode with a mission-control dark UI
-- NASA Mars Trek MOLA base imagery
-- Layer controls with opacity, legend and student "Explain this layer" popups
-- Jezero, Gale, Oxia Planum and Arcadia Planitia presets
-- A* route planning with four objectives:
-  - Safest
-  - Fastest
-  - Science-rich
-  - Resource-rich
-- Route dashboard: distance, walking time, slope, radiation, temperature, risk, oxygen, power and water
-- Science-stop suggestions
-- Simulated live conditions
-- Visor Mode with first-person AR/HUD simulation
-- Turn-back timeline and voice-style alerts
-- JSON and PDF export
-- Share action using Web Share API or clipboard
-- Offline-friendly bundled sample data for overlays and route modeling
-- Responsive/mobile layout and keyboard-focusable controls
-- First-run onboarding tour
+- React + TypeScript + Vite frontend
+- FastAPI Python backend
+- Local demo dataset with explicit provenance labels
+- Interactive Mars-style SVG map
+- Layer controls: orbital, terrain, hazards, science, chemistry, mineralogy, subsurface, environment, AI lens
+- Click-to-build Marswalk routes
+- Route distance and prototype duration estimate
+- Science opportunity detection along a route
+- AI Science Lens demo mode with image upload
+- Candidate Science Target workflow
+- Science Explorer
+- Dataset Explorer
+- Data provenance panel
+- Presentation / Demo Mode
+- SQLite schema ready for future persistence
+- NASA/PDS source documentation
+- No fabricated NASA observations or measurements
 
-## Run
+## Important data note
 
-Requires Node.js 20+.
+The current prototype intentionally runs in **DEMO DATA** mode. NASA's public Mars Rover API is archived, so this project does not pretend that an old rover endpoint is live. The architecture instead points to current NASA/PDS resources and keeps live-data adapters modular.
+
+Verified sources used in the project documentation include:
+- NASA Planetary Data System (PDS)
+- NASA Open Data AI4MARS
+- NASA PDS Mars 2020 mission bundle
+- NASA PDS data release pages
+
+## Requirements
+
+- Node.js 20+
+- npm 10+
+- Python 3.11+
+
+## Run in VS Code
+
+### 1. Frontend
+
+Open a terminal:
 
 ```bash
+cd frontend
 npm install
 npm run dev
 ```
 
-Then open the Vite URL, normally `http://localhost:5173`.
-
-Production build:
-
-```bash
-npm run build
-npm run preview
-```
-
-## Important data note
-
-The application intentionally distinguishes between:
-
-1. **NASA-attributed source layers** used for the base map and documented data-source concepts.
-2. **Bundled demo overlays and simulated route/weather/radiation values** used to keep the hackathon prototype functional without a backend.
-
-The route model is not an operational navigation or safety system. It is a demonstration of how multi-source Mars data can be transformed into a mission-planning cost function.
-
-## NASA data sources
-
-### Mars Trek / WMTS
-- Mars Trek API documentation: https://trek.nasa.gov/tiles/apidoc/trekAPI.html?body=mars
-- Global MOLA color hillshade example layer:
-  `https://trek.nasa.gov/tiles/Mars/EQ/Mars_MGS_MOLA_ClrShade_merge_global_463m/1.0.0/default/default028mm/{z}/{y}/{x}.jpg`
-- Mars Trek hosts MOLA, HRSC, CTX, HiRISE and other Mars products.
-
-### NASA Planetary Data System
-- PDS data search: https://pds.nasa.gov/datasearch/
-- PDS data releases: https://pds.nasa.gov/datasearch/subscription-service/SS-Release.shtml
-- MRO releases include CTX, HiRISE, MCS, SHARAD and SPICE.
-- Mars 2020 releases include MEDA, Mastcam-Z, PIXL, RIMFAX, SHERLOC, SuperCam and SPICE.
-- Odyssey releases include GRS and THEMIS.
-
-### MRO / CTX / HiRISE / CRISM / SHARAD
-- MRO science instruments: https://science.nasa.gov/mission/mars-reconnaissance-orbiter/science-instruments/
-- NASA PDS MRO data releases: https://pds.nasa.gov/datasearch/subscription-service/SS-Release.shtml
-- CTX provides broader terrain context around high-resolution HiRISE and mineralogical CRISM observations.
-- CRISM products can support mineralogical layers.
-- SHARAD products provide radargram data useful for subsurface investigations.
-
-### Odyssey / THEMIS / GRS
-- NASA Open Data THEMIS VIS-GEO: https://data.nasa.gov/dataset/odyssey-themis-vis-geo-v2-0
-- NASA Open Data THEMIS VIS-ALB: https://data.nasa.gov/dataset/odyssey-themis-vis-alb-v2-0
-- NASA PDS Odyssey releases: https://pds.nasa.gov/datasearch/subscription-service/SS-Release.shtml
-
-### MSL / RAD / REMS
-- NASA Open Data MSL RAD RDR: https://data.nasa.gov/dataset/msl-mars-radiation-assessment-detector-rdr
-- NASA Open Data MSL RAD EDR: https://data.nasa.gov/dataset/msl-mars-radiation-assessment-detector-edr
-- NASA Open Data REMS MODRDR: https://data.nasa.gov/dataset/msl-mars-rover-env-monitoring-station-5-modrdr-v1-0-cb197
-
-### MAVEN
-- NASA Open Data MAVEN datasets: https://data.nasa.gov/dataset/?tags=mars&tags=maven
-- MAVEN MAG calibrated data: https://data.nasa.gov/dataset/maven-mag-calibrated-data-bundle
-- MAVEN NGIMS: https://data.nasa.gov/dataset/maven-neutral-gas-and-ion-mass-spectrometer-data
-
-## Data-to-route architecture
+Open the URL shown by Vite, normally:
 
 ```text
-NASA/PDS source products
-        |
-        v
-Projection + spatial normalization
-        |
-        +--> terrain / slope / roughness
-        +--> mineral / geology
-        +--> water / ice signals
-        +--> thermal
-        +--> weather
-        +--> radiation
-        +--> landmarks / traverses
-        |
-        v
-Mission cost grid
-        |
-        +--> Safest
-        +--> Fastest
-        +--> Science-rich
-        +--> Resource-rich
-        |
-        v
-A* route
-        |
-        +--> dashboard
-        +--> Marswalk simulator
-        +--> Visor HUD
+http://localhost:5173
 ```
 
-## Credits
+### 2. Backend
 
-Mars Trek imagery and NASA mission datasets are credited to NASA, JPL-Caltech, the relevant mission teams and the NASA Planetary Data System as applicable. The prototype does not imply NASA endorsement or operational certification.
+Open a second terminal:
 
-## Accessibility
+```bash
+cd backend
+python -m venv .venv
+```
 
-- High-contrast mission-control theme
-- Visible button states
-- Native form controls
-- Semantic buttons and tab roles
-- Responsive layout
-- Keyboard-accessible controls in the browser
+Windows PowerShell:
 
-## Future production integration
+```powershell
+.venv\Scripts\Activate.ps1
+```
 
-1. Replace demo terrain/weather/radiation fields with a backend tile/data service that ingests PDS products and produces cloud-optimized rasters.
-2. Add a DEM-based path planner using true Mars geodesy and rover/astronaut mobility constraints.
-3. Add computer vision for science-target detection using labeled Mars imagery, with human-in-the-loop verification.
+Windows CMD:
+
+```cmd
+.venv\Scripts\activate
+```
+
+Then:
+
+```bash
+pip install -r requirements.txt
+python -m uvicorn app.main:app --reload --port 8000
+```
+
+Backend:
+```text
+http://localhost:8000
+```
+
+API docs:
+```text
+http://localhost:8000/docs
+```
+
+The frontend works without the backend for demo mode, but the backend is included for the intended full architecture.
+
+## Project structure
+
+```text
+martian-map/
+├─ frontend/
+│  ├─ src/
+│  │  ├─ components/
+│  │  ├─ data/
+│  │  ├─ pages/
+│  │  ├─ services/
+│  │  ├─ types/
+│  │  ├─ App.tsx
+│  │  ├─ main.tsx
+│  │  └─ styles.css
+│  └─ package.json
+├─ backend/
+│  ├─ app/
+│  │  ├─ main.py
+│  │  └─ data.py
+│  └─ requirements.txt
+├─ data/
+│  ├─ demo/
+│  ├─ metadata/
+│  └─ models/
+├─ docs/
+│  ├─ architecture.md
+│  ├─ data-sources.md
+│  ├─ ai-methodology.md
+│  ├─ scientific-methodology.md
+│  └─ limitations.md
+├─ database/
+│  └─ schema.sql
+├─ .env.example
+└─ README.md
+```
+
+## Demo flow for judges
+
+1. Open Dashboard.
+2. Go to **Martian Map**.
+3. Toggle terrain + science + hazards.
+4. Click a science marker.
+5. Open **AI Science Lens** and upload a Mars image.
+6. Show the result as **Candidate Science Target**, not a discovery.
+7. Add the candidate to the map.
+8. Open **Marswalk Planner**.
+9. Click several points to create a route.
+10. Show distance, estimated time, hazards and science opportunities.
+11. Open **Data Sources** to show provenance and limitations.
+
+## Scientific honesty
+
+The application distinguishes:
+
+- `DEMO DATA` — local demonstration values
+- `NASA / PDS SOURCE` — source reference only
+- `MODEL-DERIVED` — calculated by the prototype
+- `DEMO / SIMULATED AI` — not a scientific observation
+- `CANDIDATE SCIENCE TARGET` — requires human/scientist verification
+
+It never claims that the AI discovered life or that a route is astronaut-safe.
